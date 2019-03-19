@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -22,7 +24,7 @@
 	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
 	<link rel="stylesheet" href="css/style.css"/>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -77,17 +79,26 @@
 		} */
 		
 		#imgdiv{
-			border: 1px solid black;
-			width: 700px;
+			width: 750px;
 			height: 200px;
 			border-radius: 5px;
 			margin: 5px 0;
 			background-image: url("img/blog/1.jpg");
 			background-size: 100% 100%;
 			background-repeat: no-repeat;
+			display: inline-block;
+		}
+		.mine_img{
+			margin: 20px 5px;
+			width: 25px;
+			height: 25px;
 		}
 		.mine{
-			display: inline-block;
+			float: left;
+		}
+		#annegle{
+			font-weight:bolder;
+			margin: 15px 0;
 		}
 	</style>
 </head>
@@ -149,19 +160,25 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 contact-text">
-					<h4>Contact Info</h4>
-					<p>Nullam lacinia ex eleifend orci portt-itor, suscipit interdum augue condi-mentum. Etiam pretium turpis eget nibh laoreet iaculis. Vivamus auctor mi eget odio feugiat.</p>
+					<h4>게시물 작성</h4>
+					1.RadioButton을 통해 등록할 이미지를 선택하세요.<br/>
+					2.카테고리를 정하세요.<br/>
+					3.제목을 적으세요.<br/>
+					4.내용을 적으세요.<br/>
+					5.위의 모든 설정을 다하셨으면 Send를 클릭하세요.<br/>
+					<br/>
+					<div id="annegle">문의 사항</div>
 					<div class="cont-info">
 						<div class="ci-icon">
 							<img src="img/icons/1.png" alt="">
 						</div>
-						<span>Main Str, no 23, New York</span>
+						<span>서울특별시 XX시 XX</span>
 					</div>
 					<div class="cont-info">
 						<div class="ci-icon">
 							<img src="img/icons/2.png" alt="">
 						</div>
-						<span>+546 990221 123</span>
+						<span>+82 10-XXXX-XXXX</span>
 					</div>
 					<div class="cont-info">
 						<div class="ci-icon">
@@ -175,10 +192,10 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="mine" id="imgdiv"></div>
-								<div class="mine" id="radio-mine">
-									<input type="radio" class="mine_img" name="check" value="1" checked="checked" onclick="imgchange(1)">
-									<input type="radio" class="mine_img" name="check" value="2" onclick="imgchange(2)">
-									<input type="radio" class="mine_img" name="check" value="3" onclick="imgchange(3)">
+								<div class="mine btn-group-vertical">
+									<input type="radio" class="mine_img" name="check" value="img/blog/1.jpg" checked="checked" onclick="imgchange(1)">
+									<input type="radio" class="mine_img" name="check" value="img/blog/2.jpg" onclick="imgchange(2)">
+									<input type="radio" class="mine_img" name="check" value="img/blog/3.jpg" onclick="imgchange(3)">
 								</div>
 						        <div class="b-select-wrap select-me">
 						          <select name="category" class="form-control b-select">
@@ -266,6 +283,7 @@
 									style="width: 80%;">
 									<input type=file name='bbs_file1' size='50' class='input_write'>
 								</div>
+								<br/>
 								<button type="submit" class="site-btn">Send</button>
 							</div>
 						</div>
@@ -326,27 +344,15 @@
 					<div class="footer-widget">
 						<h4 class="fw-title">Latest Posts</h4>
 						<div class="fw-latest-post-widget">
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/1.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
+							<c:forEach items="${hitlist}" var="hit" begin="0" end="2">
+								<div class="lp-item">
+									<div class="lp-thumb set-bg" data-setbg="${hit.img}"></div>
+									<div class="lp-content">
+										<h6>${fn:substring(hit.bbsTitle,0,10)}</h6>
+										<span>${hit.bbsDate }</span>
+									</div>
 								</div>
-							</div>
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/2.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
-								</div>
-							</div>
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/3.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -390,11 +396,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		function imgchange(i) {
 			
 			if(i == 1){
-				document.getElementById('imgdiv').setAttribute('style', 'background:url(img/blog/1.jpg) 80% 80% no-repeat');
+				document.getElementById('imgdiv').style.backgroundImage = "url(img/blog/1.jpg)";
+				document.getElementById('imgdiv').style.backgroundSize = "100% 100%";
 			}else if(i == 2){
-				document.getElementById('imgdiv').setAttribute('style', 'background:url(img/blog/2.jpg) 80% 80% no-repeat');
+				document.getElementById('imgdiv').style.backgroundImage = "url(img/blog/2.jpg)";
+				document.getElementById('imgdiv').style.backgroundSize = "100% 100%";
 			}else if(i == 3){
-				document.getElementById('imgdiv').setAttribute('style', 'background:url(img/blog/3.jpg) 80% 80% no-repeat');
+				document.getElementById('imgdiv').style.backgroundImage = "url(img/blog/3.jpg)";
+				document.getElementById('imgdiv').style.backgroundSize = "100% 100%";
 			}
 		}
 	</script>

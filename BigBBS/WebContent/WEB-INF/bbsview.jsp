@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -191,27 +192,15 @@
 					<div class="footer-widget">
 						<h4 class="fw-title">Latest Posts</h4>
 						<div class="fw-latest-post-widget">
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/1.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
+							<c:forEach items="${hitlist}" var="hit" begin="0" end="2">
+								<div class="lp-item">
+									<div class="lp-thumb set-bg" data-setbg="${hit.img}"></div>
+									<div class="lp-content">
+										<h6>${fn:substring(hit.bbsTitle,0,10)}</h6>
+										<span>${hit.bbsDate }</span>
+									</div>
 								</div>
-							</div>
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/2.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
-								</div>
-							</div>
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/3.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

@@ -129,8 +129,8 @@ public class TransactionDao {
 		result = 0;
 		
 		StringBuffer query = new StringBuffer();
-		query.append("INSERT INTO BBS(BBSID,ID,BBSTITLE,BBSDATE,BBSCATEGORY,BBSCONTENT,BBSHIT)");
-		query.append(" VALUES(BBS_SEQ.NEXTVAL,?,?,SYSDATE,?,?,0)");
+		query.append("INSERT INTO BBS(BBSID,ID,BBSTITLE,BBSDATE,BBSCATEGORY,BBSCONTENT,BBSHIT,IMG)");
+		query.append(" VALUES(BBS_SEQ.NEXTVAL,?,?,SYSDATE,?,?,0,?)");
 		
 		try {
 			pstmt = conn.prepareStatement(query.toString());
@@ -138,7 +138,7 @@ public class TransactionDao {
 			pstmt.setString(2, bbsDto.getBbsTitle());
 			pstmt.setString(3, bbsDto.getBbsCategory());
 			pstmt.setString(4, bbsDto.getBbsContent());
-			
+			pstmt.setString(5, bbsDto.getImg());
 			result = pstmt.executeUpdate();
 			System.out.println("inserBbs executeUpdate ¿Ï·á!");
 		}catch (SQLException e) {
@@ -222,7 +222,6 @@ public class TransactionDao {
 	}
 	private List<BBSFileDto> DeleteFileSelect(String str) {
 		bbsfList = new ArrayList<>();
-		bbsfList = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT * FROM BBS_FILE WHERE BBSID=?");
 		try {
@@ -242,6 +241,7 @@ public class TransactionDao {
 				bbsfList.add(bbsfDto);
 			}
 		}catch(SQLException e) {
+			bbsfList = null;
 			e.printStackTrace();
 		}finally {
 			this.close(null, pstmt, rs);

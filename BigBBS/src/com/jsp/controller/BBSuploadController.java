@@ -39,11 +39,12 @@ public class BBSuploadController extends HttpServlet{
 			sessionID = (String) session.getAttribute("id");
 			//로그인 한 사람일 경우 sessionID에 속성으로써 저장
 	}
-	
+		String image = mRequest.getParameter("check");
 		String category = mRequest.getParameter("category");
 		String title = mRequest.getParameter("title");
 		String content = mRequest.getParameter("content");
 		BBSDto bbsDto = new BBSDto();
+		bbsDto.setImg(image);
 		bbsDto.setId(sessionID);
 		bbsDto.setBbsTitle(title);
 		bbsDto.setBbsCategory(category);

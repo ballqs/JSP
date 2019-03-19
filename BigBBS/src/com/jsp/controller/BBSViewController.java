@@ -32,6 +32,9 @@ public class BBSViewController extends HttpServlet{
 		int result = bbsDao.hitUpdate(bbsId);
 		bbsDto = bbsDao.selectById(bbsId);
 		
+		List<BBSDto> hitlist = bbsDao.selectHit();
+		req.setAttribute("hitlist", hitlist);
+		
 		req.setAttribute("bbsview", bbsDto);
 		
 		BBSFileDao bbsfDao = BBSFileDao.getInstance();

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -85,7 +87,7 @@
 
 	<!-- Header section -->
 	<header class="header-section">
-		<a href="./index.html" class="site-logo"><img src="./img/logo.png" alt=""></a>
+		<a href="./index.html" class="site-logo"><img src="./img/mine_logo.png" alt=""></a>
 		<div class="nav-switch">
 			<i class="fa fa-bars"></i>
 		</div>
@@ -135,19 +137,25 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 contact-text">
-					<h4>Contact Info</h4>
-					<p>Nullam lacinia ex eleifend orci portt-itor, suscipit interdum augue condi-mentum. Etiam pretium turpis eget nibh laoreet iaculis. Vivamus auctor mi eget odio feugiat.</p>
+					<h4>게시물 작성</h4>
+					1.RadioButton을 통해 등록할 이미지를 선택하세요.<br/>
+					2.카테고리를 정하세요.<br/>
+					3.제목을 적으세요.<br/>
+					4.내용을 적으세요.<br/>
+					5.위의 모든 설정을 다하셨으면 Send를 클릭하세요.<br/>
+					<br/>
+					<div id="annegle">문의 사항</div>
 					<div class="cont-info">
 						<div class="ci-icon">
 							<img src="img/icons/1.png" alt="">
 						</div>
-						<span>Main Str, no 23, New York</span>
+						<span>서울특별시 XX시 XX</span>
 					</div>
 					<div class="cont-info">
 						<div class="ci-icon">
 							<img src="img/icons/2.png" alt="">
 						</div>
-						<span>+546 990221 123</span>
+						<span>+82 10-XXXX-XXXX</span>
 					</div>
 					<div class="cont-info">
 						<div class="ci-icon">
@@ -307,27 +315,15 @@
 					<div class="footer-widget">
 						<h4 class="fw-title">Latest Posts</h4>
 						<div class="fw-latest-post-widget">
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/1.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
+							<c:forEach items="${hitlist}" var="hit" begin="0" end="2">
+								<div class="lp-item">
+									<div class="lp-thumb set-bg" data-setbg="${hit.img}"></div>
+									<div class="lp-content">
+										<h6>${fn:substring(hit.bbsTitle,0,10)}</h6>
+										<span>${hit.bbsDate }</span>
+									</div>
 								</div>
-							</div>
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/2.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
-								</div>
-							</div>
-							<div class="lp-item">
-								<div class="lp-thumb set-bg" data-setbg="img/footer-thumb/3.jpg"></div>
-								<div class="lp-content">
-									<h6>Web Hosting for everyone</h6>
-									<span>Oct 21, 2018</span>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

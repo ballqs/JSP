@@ -18,7 +18,7 @@ public class BBSDao {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	private int result;
-	private List<BBSDto> bbsList;
+	private List<BBSDto> bbsList,bbshitList;
 	private BBSDao() {
 	}
 	public static synchronized BBSDao getInstance() {
@@ -45,6 +45,59 @@ public class BBSDao {
 		}
 		return conn;
 	}
+	public int selectAll(List<BBSDto> list, List<BBSDto> hitlist) {
+		result = 0;
+		conn = this.getConnect();
+		try {
+			conn.setAutoCommit(false);
+			if(list != null && hitlist != null) {
+				result = 1;
+				conn.commit();
+				System.out.println("selectAll - 커밋 완료");
+			}else {
+				result = 0;
+				conn.rollback();
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			this.close(conn, null, null);
+		}
+		return result;
+	}
+	public List<BBSDto> selectHit(){
+		bbshitList = new ArrayList<BBSDto>();
+		conn = this.getConnect();
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT * FROM BBS ORDER BY BBSHIT DESC");
+		
+		try {
+			pstmt = conn.prepareStatement(query.toString());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BBSDto bbsDto = new BBSDto();
+				
+				bbsDto.setId(rs.getString("ID"));
+				bbsDto.setBbsId(rs.getString("BBSID"));
+				bbsDto.setBbsTitle(rs.getString("BBSTITLE"));
+				bbsDto.setBbsDate(rs.getString("BBSDATE"));
+				bbsDto.setBbsCategory(rs.getString("BBSCATEGORY"));
+				bbsDto.setBbsContent(rs.getString("BBSCONTENT"));
+				bbsDto.setBbsHit(rs.getString("BBSHIT"));
+				bbsDto.setImg(rs.getString("IMG"));
+				
+				bbshitList.add(bbsDto);
+			}
+			System.out.println("selectHit 조회 완료");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			this.close(null,pstmt,rs);
+		}
+		
+		return bbshitList;
+	}
 	public List<BBSDto> selectAll(int startNum, int perpage){
 		bbsList = new ArrayList<>();
 		conn = this.getConnect();
@@ -52,8 +105,8 @@ public class BBSDao {
 		
 		query.append("SELECT T2.*");
 		query.append("FROM (SELECT ROWNUM R2, T.*");
-		query.append("FROM (SELECT BBSID,ID,substr(BBSTITLE,1,20)BBSTITLE,");
-		query.append("BBSCATEGORY,substr(BBSCONTENT,1,50) BBSCONTENT,BBSDATE,BBSHIT ");
+		query.append("FROM (SELECT BBSID,ID,substr(BBSTITLE,1,30)BBSTITLE,");
+		query.append("BBSCATEGORY,substr(BBSCONTENT,1,50) BBSCONTENT,BBSDATE,BBSHIT,IMG ");
 		query.append("FROM BBS ORDER BY BBSID DESC) T) T2 ");
 		query.append("WHERE T2.R2 BETWEEN ? AND ?");
 		
@@ -75,6 +128,7 @@ public class BBSDao {
 				bbsDto.setBbsCategory(rs.getString("BBSCATEGORY"));
 				bbsDto.setBbsContent(rs.getString("BBSCONTENT"));
 				bbsDto.setBbsHit(rs.getString("BBSHIT"));
+				bbsDto.setImg(rs.getString("IMG"));
 				
 				bbsList.add(bbsDto);
 			}
@@ -82,7 +136,7 @@ public class BBSDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			this.close(conn,pstmt,null);
+			this.close(null,pstmt,rs);
 		}
 		return bbsList;
 	}

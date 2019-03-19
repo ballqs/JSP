@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsp.dao.BBSDao;
+import com.jsp.dao.TransactionDao;
 import com.jsp.dto.BBSDto;
 
 public class BBSController extends HttpServlet{
@@ -40,7 +41,12 @@ public class BBSController extends HttpServlet{
 		BBSDao bbsDao = BBSDao.getInstance();
 		List<BBSDto> list = bbsDao.selectAll(startNum, perpage);
 		
+		List<BBSDto> hitlist = bbsDao.selectHit();
+		
+		int resultTrans = bbsDao.selectAll(list,hitlist);
+		
 		req.setAttribute("list", list);
+		req.setAttribute("hitlist", hitlist);
 		int startPage = 1;
 		int endPage = 0;
 //		startPage = nowPage / 10 * 10 + 1;

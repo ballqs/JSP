@@ -8,7 +8,14 @@ public class BBSDto {
 	private String bbsCategory; // 카테고리
 	private String bbsContent; // 내용
 	private String bbsHit; // 조회수
+	private String img;
 	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public String getId() {
 		return id;
 	}
@@ -53,8 +60,10 @@ public class BBSDto {
 	}
 	@Override
 	public String toString() {
-		return "BBSDto [id=" + id + ", bbsId=" + bbsId + ", bbsTitle=" + bbsTitle + ", bbsDate=" + bbsDate
-				+ ", bbsCategory=" + bbsCategory + ", bbsContent=" + bbsContent + ", bbsHit=" + bbsHit + "]";
+		return "BBSDto [bbsId=" + bbsId + ", id=" + id + ", bbsTitle=" + bbsTitle + ", bbsDate=" + bbsDate
+				+ ", bbsCategory=" + bbsCategory + ", bbsContent=" + bbsContent + ", bbsHit=" + bbsHit + ", img=" + img
+				+ "]";
 	}
+	
 	
 }
